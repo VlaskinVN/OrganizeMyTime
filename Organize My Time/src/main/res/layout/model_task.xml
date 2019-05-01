@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:clickable="true"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTaskTitle"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="25dp"
+            android:layout_toRightOf="@id/tvTaskDate"
+            android:layout_alignParentLeft="true"
+            android:text="dasdsdad"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTaskDate"
+            android:gravity="right"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimaryLight"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="25dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTaskDescription"
+            android:visibility="invisible"/>
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/priority_rect_low"
+            android:id="@+id/vPriority"/>
+
+
+</RelativeLayout>

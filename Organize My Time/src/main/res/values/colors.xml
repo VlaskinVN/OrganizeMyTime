@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#263238</color>
+    <color name="colorPrimaryDark">#000a12</color>
+    <color name="colorPrimaryLight">#4f5b62</color>
+    <color name="colorAccent">#c62828</color>
+    <color name="colorFloat">#430000</color>
+
+    <color name="colorWhite">#fff</color>
+    <color name="colorGrayPager">#e6e6e6</color>
+
+    <color name="priorityHigh">#6e0002</color>
+    <color name="priorityNormal">#097000</color>
+    <color name="priorityLow">#acacac</color>
+
+    <color name="priorityHighSelected">#870002</color>
+    <color name="priorityNormalSelected">#0b8600</color>
+    <color name="priorityLowSelected">#c4c4c4</color>
+
+    <color name="gray_50">#d6d6d6</color>
+    <color name="gray_200">#cecece</color>
+</resources>

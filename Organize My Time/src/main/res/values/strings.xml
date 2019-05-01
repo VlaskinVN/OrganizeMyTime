@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Organize My Time</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="current_task">Текущие</string>
+    <string name="done_task">Выполненные</string>
+    <string name="add_new_task">Добавить новую задачу</string>
+
+    <string name="dialog_title">Добавление новой задачи</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Отмена</string>
+    <string name="dialog_error_empty_title">Введите название задачи</string>
+
+
+    <string name="task_title">Название</string>
+    <string name="task_date">Дата</string>
+    <string name="task_time">Время</string>
+    <string name="task_description">Заметки</string>
+    <string name="task_status">Статус</string>
+    <string name="task_priority">Приоритет</string>
+</resources>

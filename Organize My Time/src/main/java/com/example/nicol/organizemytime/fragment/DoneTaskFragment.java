@@ -1,0 +1,57 @@
+package com.example.nicol.organizemytime.fragment;
+
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.example.nicol.organizemytime.R;
+import com.example.nicol.organizemytime.adapter.CurrentTasksAdapter;
+import com.example.nicol.organizemytime.adapter.DoneTaskAdapter;
+import com.example.nicol.organizemytime.model.ModelTask;
+
+public class DoneTaskFragment extends TaskFragment {
+
+    public DoneTaskFragment() {
+        // Required empty public constructor
+    }
+
+    public interface OnTaskRestoreListener{
+        void onTaskRestore(ModelTask task);
+    }
+
+    public OnTaskRestoreListener onTaskRestoreListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            onTaskRestoreListener = (OnTaskRestoreListener) context;
+        }catch (ClassCastException e){
+            throw  new ClassCastException(context.toString() + " must implements OnTaskRestoreListener");
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_done_task, container, false);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.rvDoneTasks);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+        adapter = new DoneTaskAdapter(this);
+        recyclerView.setAdapter(adapter);
+        // Inflate the layout for this fragment
+        return rootView;
+    }
+
+    @Override
+    public void moveTask(ModelTask task) {
+        onTaskRestoreListener.onTaskRestore(task);
+    }
+}
