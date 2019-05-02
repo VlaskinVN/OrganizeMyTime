@@ -10,6 +10,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -99,12 +100,18 @@ public class AddingTaskDialogFragment extends DialogFragment {
                 if (editDate.length() == 0){
                     editDate.setText(" ");
                 }
-                Calendar dateCalendate = Calendar.getInstance();
-                DialogFragment datePickerFragment = DatePickerFragment.newInstance(getActivity(), R.id.tvTaskDate, dateCalendate);
+
+                DialogFragment datePickerFragment = DatePickerFragment.newInstance(getActivity(), R.id.tvTaskDate, calendar);
                 ((DatePickerFragment) datePickerFragment).setDateDialogFragmentListener(new DateDialogFragmentListener() {
                     @Override
-                    public void dateDialogFragmentDateSet(Calendar date) {
-                        editDate.setText(Utils.getDate(date.getTimeInMillis()));
+                    public void dateDialogFragmentDateSet(int year, int monthOfYear, int dayOfMonth) {
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, monthOfYear);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                        editDate.setText(Utils.getDate(calendar.getTimeInMillis()));
+
+                        //Log.d("=== ATDF ", "Year : " + year + " month : " + monthOfYear + " day : " + dayOfMonth);
                     }
                 });
 
@@ -118,12 +125,15 @@ public class AddingTaskDialogFragment extends DialogFragment {
                 if (editTime.length() == 0){
                     editTime.setText(" ");
                 }
-                Calendar dateCalendate = Calendar.getInstance();
-                DialogFragment timePickerFragment = TimePickerFragment.newInstance(getActivity(), R.id.tvTaskDate, dateCalendate);
+                DialogFragment timePickerFragment = TimePickerFragment.newInstance(getActivity(), R.id.tvTaskDate, calendar);
                 ((TimePickerFragment) timePickerFragment).setTimeDialogFragmentListener(new TimeDialogFragmentListener() {
                     @Override
-                    public void timeDialogFragmentDateSet(Calendar date) {
-                        editTime.setText(Utils.getTime(date.getTimeInMillis()));
+                    public void timeDialogFragmentDateSet(int hourOfDay, int minute) {
+                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        calendar.set(Calendar.MINUTE, minute);
+                        calendar.set(Calendar.SECOND, 0);
+
+                        editTime.setText(Utils.getTime(calendar.getTimeInMillis()));
                     }
                 });
 

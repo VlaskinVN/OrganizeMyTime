@@ -14,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
 import com.example.nicol.organizemytime.adapter.TabAdapter;
+import com.example.nicol.organizemytime.database.DbHelper;
 import com.example.nicol.organizemytime.dialog.AddingTaskDialogFragment;
 import com.example.nicol.organizemytime.fragment.CurrentTaskFragment;
 import com.example.nicol.organizemytime.fragment.DoneTaskFragment;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
     private TabAdapter tabAdapter;
     private CurrentTaskFragment currentTaskFragment;
     private DoneTaskFragment doneTaskFragment;
+    public DbHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
         setContentView(R.layout.activity_main);
 
         this.fragmentMennager = getSupportFragmentManager();
+        dbHelper = new DbHelper(getApplicationContext());
 
         setUI();
     }
@@ -116,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
     @Override
     public void onTaskAdded(ModelTask newTask) {
         Toast.makeText(this, "Task added", Toast.LENGTH_LONG).show();
-        currentTaskFragment.addTask(newTask);
+        currentTaskFragment.addTask(newTask, true);
     }
 
     @Override
@@ -126,13 +130,11 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
 
     @Override
     public void onTaskDone(ModelTask task) {
-        doneTaskFragment.addTask(task);
-
-        //Log.d("=== MainActivity ", "onTaskDone - task.getTitle() : " + task.getTitle());
+        doneTaskFragment.addTask(task, false);
     }
 
     @Override
     public void onTaskRestore(ModelTask task) {
-        currentTaskFragment.addTask(task);
+        currentTaskFragment.addTask(task, false);
     }
 }

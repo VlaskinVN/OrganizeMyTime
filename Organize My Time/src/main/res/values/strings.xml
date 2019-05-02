@@ -13,6 +13,13 @@
     <string name="dialog_cancel">Отмена</string>
     <string name="dialog_error_empty_title">Введите название задачи</string>
 
+    <string name="dialog_remove_message">Вы действительно хотите удалить данную задачу?</string>
+    <string name="snackbar_remove_message">Вы удалили задачу : </string>
+
+    <string name="contextmenu_read">Посмотреть задачу</string>
+    <string name="contextmenu_remove">Удалить задачу</string>
+    <string name="contextmenu_edit">Редактировать задачу</string>
+
 
     <string name="task_title">Название</string>
     <string name="task_date">Дата</string>

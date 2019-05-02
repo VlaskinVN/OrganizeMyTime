@@ -13,7 +13,11 @@ import android.view.ViewGroup;
 import com.example.nicol.organizemytime.R;
 import com.example.nicol.organizemytime.adapter.CurrentTasksAdapter;
 import com.example.nicol.organizemytime.adapter.DoneTaskAdapter;
+import com.example.nicol.organizemytime.database.DbHelper;
 import com.example.nicol.organizemytime.model.ModelTask;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DoneTaskFragment extends TaskFragment {
 
@@ -48,6 +52,20 @@ public class DoneTaskFragment extends TaskFragment {
         recyclerView.setAdapter(adapter);
         // Inflate the layout for this fragment
         return rootView;
+    }
+
+    @Override
+    public void addTaskFromDb() {
+        List<ModelTask> tasks = new ArrayList<>();
+        tasks.addAll(activity.dbHelper.getQueryManager().getTasks(
+                DbHelper.DB_SELECTION_STATUS,
+                new String[]{Integer.toString(ModelTask.STATUS_DONE)},
+                DbHelper.DB_TASK_DATE
+                ));
+
+        for (int i = 0; i < tasks.size(); i++){
+            addTask(tasks.get(i), false);
+        }
     }
 
     @Override

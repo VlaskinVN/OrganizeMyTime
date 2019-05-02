@@ -55,7 +55,7 @@ public class DatePickerFragment extends DialogFragment {
             sDate.set(Calendar.YEAR, year);
             sDate.set(Calendar.MONTH, month);
             sDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            sListener.dateDialogFragmentDateSet(sDate);
+            sListener.dateDialogFragmentDateSet(year, month, dayOfMonth);
         }
     };
 }

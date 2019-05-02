@@ -2,6 +2,8 @@ package com.example.nicol.organizemytime.model;
 
 import com.example.nicol.organizemytime.R;
 
+import java.util.Date;
+
 public class ModelTask implements Item {
     public static final int PRIORITY_LOW = 0;
     public static final int PRIORITY_NORMAL = 1;
@@ -19,17 +21,20 @@ public class ModelTask implements Item {
     private long date;
     private int priority;
     private int status;
+    private long timeStamp;
 
     public ModelTask(){
         status = -1;
+        this.timeStamp = new Date().getTime();
     }
 
-    public ModelTask(String title, long date, int priority, int status, String description){
+    public ModelTask(String title, long date, int priority, int status, String description, long timeStamp){
         this.title = title;
         this.date = date;
         this.priority = priority;
         this.status = status;
         this.description = description;
+        this.timeStamp = timeStamp;
     }
 
     public int getPriorityColor(){
@@ -99,5 +104,13 @@ public class ModelTask implements Item {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
     }
 }

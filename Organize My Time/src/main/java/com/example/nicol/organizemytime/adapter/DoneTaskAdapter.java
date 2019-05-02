@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.res.Resources;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -58,9 +59,17 @@ public class DoneTaskAdapter extends TaskAdapter {
             taskViewHolder.priority.setEnabled(true);
 
             view.setBackground(resources.getDrawable(R.drawable.status_rect));
-            taskViewHolder.title.setTextColor(resources.getColor(R.color.design_default_color_primary));
-            taskViewHolder.date.setTextColor(resources.getColor(R.color.design_default_color_primary));
+            taskViewHolder.title.setTextColor(resources.getColor(R.color.colorPrimaryDark));
+            taskViewHolder.date.setTextColor(resources.getColor(R.color.colorPrimaryDark));
             taskViewHolder.priority.setBackground(resources.getDrawable(task.getPriorityColor()));
+
+            view.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    getTaskFragment().showMenu(view, taskViewHolder.getLayoutPosition());
+                    return true;
+                }
+            });
 
             taskViewHolder.priority.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -68,9 +77,11 @@ public class DoneTaskAdapter extends TaskAdapter {
                     taskViewHolder.priority.setEnabled(false);
                     task.setStatus(ModelTask.STATUS_DONE);
 
+                    getTaskFragment().activity.dbHelper.getUpdateManager().statusUpdate(task.getTimeStamp(), ModelTask.STATUS_CURRENT);
+
                     view.setBackground(resources.getDrawable(R.drawable.status_rect_selected));
-                    taskViewHolder.title.setTextColor(resources.getColor(R.color.design_default_color_primary));
-                    taskViewHolder.date.setTextColor(resources.getColor(R.color.design_default_color_primary));
+                    taskViewHolder.title.setTextColor(resources.getColor(R.color.colorPrimaryDark));
+                    taskViewHolder.date.setTextColor(resources.getColor(R.color.colorPrimaryDark));
                     taskViewHolder.priority.setBackground(resources.getDrawable(task.getPriorityColor()));
 
 

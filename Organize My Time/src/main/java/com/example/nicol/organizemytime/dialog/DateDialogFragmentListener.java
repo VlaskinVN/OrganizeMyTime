@@ -3,5 +3,5 @@ package com.example.nicol.organizemytime.dialog;
 import java.util.Calendar;
 
 interface DateDialogFragmentListener {
-    public void dateDialogFragmentDateSet(Calendar date);
+    void dateDialogFragmentDateSet(int year, int monthOfYear, int dayOfMonth);
 }

@@ -2,9 +2,14 @@ package com.example.nicol.organizemytime.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.example.nicol.organizemytime.R;
 import com.example.nicol.organizemytime.fragment.TaskFragment;
 import com.example.nicol.organizemytime.model.Item;
 

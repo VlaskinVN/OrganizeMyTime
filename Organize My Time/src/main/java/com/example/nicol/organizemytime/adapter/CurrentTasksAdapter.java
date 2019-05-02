@@ -2,9 +2,12 @@ package com.example.nicol.organizemytime.adapter;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -22,6 +25,7 @@ import com.example.nicol.organizemytime.dialog.ReadTaskDialogFragment;
 import com.example.nicol.organizemytime.fragment.CurrentTaskFragment;
 import com.example.nicol.organizemytime.model.Item;
 import com.example.nicol.organizemytime.model.ModelTask;
+
 
 public class CurrentTasksAdapter extends TaskAdapter {
     private static final int TYPE_TASK = 0;
@@ -80,12 +84,11 @@ public class CurrentTasksAdapter extends TaskAdapter {
             taskViewHolder.date.setTextColor(resources.getColor(R.color.colorPrimaryDark));
             taskViewHolder.priority.setBackground(resources.getDrawable(task.getPriorityColor()));
 
-            itemView.setOnClickListener(new View.OnClickListener(){
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public void onClick(View v) {
-                    DialogFragment dialogFragment = new ReadTaskDialogFragment();
-                    ((ReadTaskDialogFragment) dialogFragment).setTask(task);
-                    dialogFragment.show(((FragmentActivity)context).getSupportFragmentManager(), "ReadTaskDialogFragment");
+                public boolean onLongClick(View v) {
+                    getTaskFragment().showMenu(itemView, taskViewHolder.getLayoutPosition());
+                    return true;
                 }
             });
 
@@ -94,7 +97,9 @@ public class CurrentTasksAdapter extends TaskAdapter {
                 public void onClick(View v) {
                     taskViewHolder.priority.setEnabled(false);
                     task.setStatus(ModelTask.STATUS_DONE);
-//                    Log.d("=== CTA ", "Cick - task.getStatus() : " + task.getStatus());
+
+                    getTaskFragment().activity.dbHelper.getUpdateManager().statusUpdate(task.getTimeStamp(), ModelTask.STATUS_DONE);
+
                     itemView.setBackground(resources.getDrawable(R.drawable.status_rect_selected));
                     taskViewHolder.title.setTextColor(resources.getColor(R.color.colorPrimaryDark));
                     taskViewHolder.date.setTextColor(resources.getColor(R.color.colorPrimaryDark));

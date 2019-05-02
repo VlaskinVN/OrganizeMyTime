@@ -46,29 +46,7 @@ public class TimePickerFragment extends DialogFragment{
             stime.set(Calendar.HOUR_OF_DAY, hourOfDay);
             stime.set(Calendar.MINUTE, minute);
             stime.set(Calendar.SECOND, 0);
-            sListener.timeDialogFragmentDateSet(stime);
+            sListener.timeDialogFragmentDateSet(hourOfDay, minute);
         }
     };    
-    
-    /*public TimePickerFragment (){}
-
-	public static TimePickerFragment newInstance(){
-        TimePickerFragment frag = new TimePickerFragment();
-        return frag;
-    }
-	
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-    }
-
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        Calendar c = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
-
-        return new TimePickerDialog(getActivity(), this, hour, minute, DateFormat.is24HourFormat(getActivity()));
-    }*/
 }

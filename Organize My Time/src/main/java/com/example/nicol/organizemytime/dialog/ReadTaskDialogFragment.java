@@ -52,7 +52,7 @@ public class ReadTaskDialogFragment extends DialogFragment {
         tilDesc.setHint(getResources().getString(R.string.task_description));
         tilPriority.setHint(getResources().getString(R.string.task_priority));
         tilStatus.setHint(getResources().getString(R.string.task_status));
-        Log.d("=== RTDF ", "task.getPriority() : " + task.getPriority());
+        //Log.d("=== RTDF ", "task.getPriority() : " + task.getPriority());
 
         tvTitle.setText(task.getTitle());
         tvDate.setText(Utils.getFullDate(task.getDate()));
