@@ -8,6 +8,7 @@
     <string name="done_task">Выполненные</string>
     <string name="add_new_task">Добавить новую задачу</string>
 
+    <string name="dialog_title_edit">Редактирование задачи</string>
     <string name="dialog_title">Добавление новой задачи</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Отмена</string>
@@ -20,6 +21,10 @@
     <string name="contextmenu_remove">Удалить задачу</string>
     <string name="contextmenu_edit">Редактировать задачу</string>
 
+    <string name="sep_overdue">Просроченно</string>
+    <string name="sep_today">Сегодня</string>
+    <string name="sep_tomorrow">Завтра</string>
+    <string name="sep_future">В дальнейшем</string>
 
     <string name="task_title">Название</string>
     <string name="task_date">Дата</string>
@@ -27,4 +32,15 @@
     <string name="task_description">Заметки</string>
     <string name="task_status">Статус</string>
     <string name="task_priority">Приоритет</string>
+
+    <string name="notify_read">Посмотреть</string>
+
+    <string name="mAbout">О приложении</string>
+    <string name="goback">Вернуться обратно</string>
+
+    <string name="about_start">Android приложение, служащее для организации времени человека.</string>
+    <string name="about_priority">Приоритетность задач : </string>
+    <string name="about_priority_low">Низкий приоритет задачи. Низкая приоритетность означает что, есть запланированная задача, но она не сильно важная.</string>
+    <string name="about_priority_normal">Обычный приоритет задачи. Обыная приоритетность означает что, есть основная задача.</string>
+    <string name="about_priority_high">Высокий приоритет задачи. Высокая приоритетность означает что, эта задача важна для вас, и которая должна быть выполенная в любом случае.</string>
 </resources>

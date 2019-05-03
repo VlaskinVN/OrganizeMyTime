@@ -21,6 +21,7 @@ import android.widget.Spinner;
 
 import com.example.nicol.organizemytime.R;
 import com.example.nicol.organizemytime.Utils;
+import com.example.nicol.organizemytime.alarm.AlarmHelper;
 import com.example.nicol.organizemytime.model.ModelTask;
 
 import java.util.Calendar;
@@ -59,7 +60,7 @@ public class AddingTaskDialogFragment extends DialogFragment {
         final TextInputLayout tilDecription = (TextInputLayout) containte.findViewById(R.id.tilDialogTaskDescription);
         final EditText editDescription = tilDecription.getEditText();
 
-        TextInputLayout tilDate = (TextInputLayout) containte.findViewById(R.id.tilDialogTaskDate);
+        final TextInputLayout tilDate = (TextInputLayout) containte.findViewById(R.id.tilDialogTaskDate);
         final EditText editDate = tilDate.getEditText();
 
         TextInputLayout tilTime = (TextInputLayout) containte.findViewById(R.id.tilDialogTaskTime);
@@ -92,7 +93,6 @@ public class AddingTaskDialogFragment extends DialogFragment {
         });
 
         final Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) + 1);
 
         editDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,10 +146,18 @@ public class AddingTaskDialogFragment extends DialogFragment {
             public void onClick(DialogInterface dialog, int which) {
                 task.setTitle(editTitle.getText().toString());
                 task.setDescription(editDescription.getText().toString());
+                task.setStatus(ModelTask.STATUS_CURRENT);
                 if (editDate.length() != 0 || editTime.length() != 0){
                     task.setDate(calendar.getTimeInMillis());
+                    AlarmHelper alarmHelper = AlarmHelper.getInstance();
+                    alarmHelper.setAlarm(task);
+                } else {
+                    calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) + 1);
+                    calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
+                    calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
+                    calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH));
+                    task.setDate(calendar.getTimeInMillis());
                 }
-                task.setStatus(ModelTask.STATUS_CURRENT);
                 addingTaskListener.onTaskAdded(task);
                 dialog.dismiss();
             }
@@ -172,6 +180,29 @@ public class AddingTaskDialogFragment extends DialogFragment {
                     positiveButton.setEnabled(false);
                     tilTitle.setError(getResources().getString(R.string.dialog_error_empty_title));
                 }
+
+                editDate.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (calendar.get(Calendar.DAY_OF_YEAR) < Calendar.getInstance().get(Calendar.DAY_OF_YEAR)){
+                            positiveButton.setEnabled(false);
+                            tilDate.setError("Выбранна некоректная дата!");
+                        }else{
+                            positiveButton.setEnabled(true);
+                            tilDate.setErrorEnabled(false);
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
 
                 editTitle.addTextChangedListener(new TextWatcher() {
                     @Override

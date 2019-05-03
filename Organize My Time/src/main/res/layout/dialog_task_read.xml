@@ -56,7 +56,7 @@
                 android:cursorVisible="false"/>
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
-            android:layout_width="170dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tilDialogTaskReadPriority"
             android:layout_marginLeft="16dp"
@@ -72,13 +72,13 @@
                 android:cursorVisible="false"/>
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
-            android:layout_width="170dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tilDialogTaskReadStatus"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:layout_alignRight="@id/tilDialogTaskReadDescription"
-            android:layout_below="@id/tilDialogTaskReadDescription">
+            android:layout_marginRight="16dp"
+            android:layout_below="@id/tilDialogTaskReadPriority">
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

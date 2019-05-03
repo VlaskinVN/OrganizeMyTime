@@ -1,11 +1,7 @@
 package com.example.nicol.organizemytime;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
@@ -13,28 +9,22 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ContextMenu;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
 import com.example.nicol.organizemytime.adapter.TabAdapter;
+import com.example.nicol.organizemytime.alarm.AlarmHelper;
 import com.example.nicol.organizemytime.database.DbHelper;
 import com.example.nicol.organizemytime.dialog.AddingTaskDialogFragment;
+import com.example.nicol.organizemytime.dialog.EditTaskDialogFragment;
 import com.example.nicol.organizemytime.fragment.CurrentTaskFragment;
 import com.example.nicol.organizemytime.fragment.DoneTaskFragment;
 import com.example.nicol.organizemytime.model.ModelTask;
 
-import java.util.ArrayList;
-
-public class MainActivity extends AppCompatActivity implements AddingTaskDialogFragment.AddingTaskListener, CurrentTaskFragment.OnTaskDoneListener, DoneTaskFragment.OnTaskRestoreListener {
+public class MainActivity extends AppCompatActivity implements AddingTaskDialogFragment.AddingTaskListener, CurrentTaskFragment.OnTaskDoneListener, DoneTaskFragment.OnTaskRestoreListener, EditTaskDialogFragment.EditTaskListener {
 
     private FragmentManager fragmentMennager;
     private TabAdapter tabAdapter;
@@ -50,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
         this.fragmentMennager = getSupportFragmentManager();
         dbHelper = new DbHelper(getApplicationContext());
 
+        AlarmHelper.getInstance().init(getApplicationContext());
+
         setUI();
     }
 
@@ -62,11 +54,14 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            default:
-                break;
-        }
+            case R.id.mAbout:
+                Intent intent = new Intent(MainActivity.this, OptionActivity.class);
+                startActivity(intent);
+                return true;
 
-        return true;
+            default:
+                return false;
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -118,6 +113,18 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        MyApplication.activityResumed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MyApplication.activityPaused();
+    }
+
+    @Override
     public void onTaskAdded(ModelTask newTask) {
         Toast.makeText(this, "Task added", Toast.LENGTH_LONG).show();
         currentTaskFragment.addTask(newTask, true);
@@ -136,5 +143,11 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
     @Override
     public void onTaskRestore(ModelTask task) {
         currentTaskFragment.addTask(task, false);
+    }
+
+    @Override
+    public void onTaskEdited(ModelTask updateTask) {
+        currentTaskFragment.updateTask(updateTask);
+        dbHelper.getUpdateManager().taskUpdate(updateTask);
     }
 }

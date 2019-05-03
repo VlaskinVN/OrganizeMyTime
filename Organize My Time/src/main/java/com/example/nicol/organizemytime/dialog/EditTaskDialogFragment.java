@@ -5,8 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
@@ -26,10 +24,10 @@ import com.example.nicol.organizemytime.model.ModelTask;
 
 import java.util.Calendar;
 
-public class EditTaskDialogFragmetn extends DialogFragment {
+public class EditTaskDialogFragment extends DialogFragment {
 
-    public static EditTaskDialogFragmetn newInstance(ModelTask task) {
-        EditTaskDialogFragmetn etdf = new EditTaskDialogFragmetn();
+    public static EditTaskDialogFragment newInstance(ModelTask task) {
+        EditTaskDialogFragment etdf = new EditTaskDialogFragment();
 
         Bundle args = new Bundle();
         args.putString("title", task.getTitle());
@@ -37,6 +35,8 @@ public class EditTaskDialogFragmetn extends DialogFragment {
         args.putInt("priority", task.getPriority());
         args.putString("description", task.getDescription());
         args.putLong("time_stamp", task.getTimeStamp());
+
+        etdf.setArguments(args);
 
         return etdf;
     }

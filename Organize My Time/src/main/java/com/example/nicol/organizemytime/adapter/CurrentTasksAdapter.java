@@ -7,6 +7,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
+import android.media.midi.MidiOutputPort;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -24,7 +25,10 @@ import com.example.nicol.organizemytime.Utils;
 import com.example.nicol.organizemytime.dialog.ReadTaskDialogFragment;
 import com.example.nicol.organizemytime.fragment.CurrentTaskFragment;
 import com.example.nicol.organizemytime.model.Item;
+import com.example.nicol.organizemytime.model.ModelSeparator;
 import com.example.nicol.organizemytime.model.ModelTask;
+
+import java.util.Calendar;
 
 
 public class CurrentTasksAdapter extends TaskAdapter {
@@ -50,7 +54,10 @@ public class CurrentTasksAdapter extends TaskAdapter {
                 viewGroup.getContext();
 
                 return new TaskViewHolder(v, title, date, priority, decription);
-
+            case TYPE_SEPARATOR:
+                View sep = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.model_separator, viewGroup, false);
+                TextView type = (TextView) sep.findViewById(R.id.tvSepName);
+                return new SeparatorViewHolder(sep, type);
                 default:
                     return null;
         }
@@ -60,13 +67,15 @@ public class CurrentTasksAdapter extends TaskAdapter {
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
         Item item = items.get(i);
 
+
+        final Resources resources = viewHolder.itemView.getResources();
+
         if (item.isTask()){
             viewHolder.itemView.setEnabled(true);
             final ModelTask task = (ModelTask) item;
             final TaskViewHolder taskViewHolder = (TaskViewHolder) viewHolder;
 
             final View itemView = taskViewHolder.itemView;
-            final Resources resources = itemView.getResources();
 
             taskViewHolder.title.setText(task.getTitle());
             taskViewHolder.decription.setText(task.getDescription());
@@ -78,6 +87,12 @@ public class CurrentTasksAdapter extends TaskAdapter {
 
             itemView.setVisibility(View.VISIBLE);
             taskViewHolder.priority.setEnabled(true);
+
+            if (task.getDate() != 0 && task.getDate() < Calendar.getInstance().getTimeInMillis()){
+                itemView.setBackgroundColor(resources.getColor(R.color.gray_200));
+            }else{
+                itemView.setBackgroundColor(resources.getColor(R.color.gray_50));
+            }
 
             itemView.setBackground(resources.getDrawable(R.drawable.status_rect));
             taskViewHolder.title.setTextColor(resources.getColor(R.color.colorPrimaryDark));
@@ -141,10 +156,10 @@ public class CurrentTasksAdapter extends TaskAdapter {
                     }
                 }
             });
-//
-//            Log.d("=== CTA ", "After - task.getStatus() : " + task.getStatus());
-//            Log.d("=== CTA ", "task.getStatus() == ModelTask.STATUS_DONE : " + task.getStatus() + "    " + ModelTask.STATUS_DONE);
-
+        } else {
+            ModelSeparator sep = (ModelSeparator) item;
+            SeparatorViewHolder separatorViewHolder = (SeparatorViewHolder) viewHolder;
+            separatorViewHolder.type.setText(resources.getString(sep.getType()));
         }
     }
 

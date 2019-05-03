@@ -1,4 +1,4 @@
-package com.example.nicol.organizemytime;
+package com.example.nicol.organizemytime.alarm;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -8,12 +8,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
+import com.example.nicol.organizemytime.MainActivity;
+import com.example.nicol.organizemytime.MyApplication;
+import com.example.nicol.organizemytime.R;
+
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String title = intent.getStringExtra("title");
+        String description = intent.getStringExtra("description");
         long timeStamp = intent.getLongExtra("time_stamp", 0);
-        int color = intent.getIntExtra("color", 0);
+        //int color = intent.getIntExtra("color", 0);
 
         Intent intentRes = new Intent(context, MainActivity.class);
 
@@ -26,9 +31,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, (int) timeStamp, intentRes, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-        builder.setContentTitle("Напоминание");
-        builder.setContentText(title);
-        builder.setColor(context.getResources().getColor(color));
+        builder.setContentTitle("Напоминание : " + title);
+        builder.setContentText(description);
+       // builder.setColor(context.getResources().getColor(color));
 
         builder.setSmallIcon(R.drawable.ic_add_alert);
 
