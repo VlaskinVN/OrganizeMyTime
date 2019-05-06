@@ -19,6 +19,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String DB_TASK_STATUS = "task_status";
     public static final String DB_TASK_DESCRIPTION = "task_description";
     public static final String DB_TASK_TIMESTAMP = "task_timestamp";
+    public static final String DB_TASK_MAP_COORDINATE = "task_map_coordinate";
 
     private static final String DB_COMMAND_CREATE_TABLE =
             "CREATE TABLE " + DB_TABLE + " (" + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -27,7 +28,8 @@ public class DbHelper extends SQLiteOpenHelper {
             + DB_TASK_PRIORITY + " INTEGER, "
             + DB_TASK_STATUS + " INTEGER, "
             + DB_TASK_DESCRIPTION + " TEXT, "
-            + DB_TASK_TIMESTAMP + " LONG);";
+            + DB_TASK_TIMESTAMP + " LONG"
+            + DB_TASK_MAP_COORDINATE + " TEXT);";
 
     public static final String DB_SELECTION_STATUS = DbHelper.DB_TASK_STATUS + " = ?";
     public static final String DB_SELECTION_TIMESTAMP = DbHelper.DB_TASK_TIMESTAMP + " = ?";
@@ -60,6 +62,7 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(DB_TASK_STATUS, task.getStatus());
         contentValues.put(DB_TASK_DESCRIPTION, task.getDescription());
         contentValues.put(DB_TASK_TIMESTAMP, task.getTimeStamp());
+        contentValues.put(DB_TASK_MAP_COORDINATE, task.getMapCoordinate());
 
         getWritableDatabase().insert(DB_TABLE, null, contentValues);
     }

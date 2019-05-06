@@ -7,6 +7,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.WakefulBroadcastReceiver;
+import android.util.Log;
 
 import com.example.nicol.organizemytime.MainActivity;
 import com.example.nicol.organizemytime.MyApplication;
@@ -18,7 +20,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         String title = intent.getStringExtra("title");
         String description = intent.getStringExtra("description");
         long timeStamp = intent.getLongExtra("time_stamp", 0);
-        //int color = intent.getIntExtra("color", 0);
+        String priority = intent.getStringExtra("priority");
+        int color = intent.getIntExtra("color", 0);
 
         Intent intentRes = new Intent(context, MainActivity.class);
 
@@ -32,8 +35,10 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setContentTitle("Напоминание : " + title);
-        builder.setContentText(description);
-       // builder.setColor(context.getResources().getColor(color));
+        builder.setContentText(title);
+        builder.setPriority(NotificationCompat.PRIORITY_MAX);
+        builder.setStyle(new NotificationCompat.BigTextStyle().bigText(description).setBigContentTitle("Подробнее о задачи : " + title).setSummaryText(priority));
+        builder.setColor(context.getResources().getColor(color));
 
         builder.setSmallIcon(R.drawable.ic_add_alert);
 
@@ -45,5 +50,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify((int) timeStamp, notification);
+        Log.d("=== AR : ", "NOTIFY!!");
     }
 }

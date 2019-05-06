@@ -26,8 +26,9 @@ public class DbQueryManager {
             int priority = c.getInt(c.getColumnIndex(DbHelper.DB_TASK_PRIORITY));
             int status = c.getInt(c.getColumnIndex(DbHelper.DB_TASK_STATUS));
             String description = c.getString(c.getColumnIndex(DbHelper.DB_TASK_DESCRIPTION));
+            String mapCoordinate = c.getColumnName(c.getColumnIndex(DbHelper.DB_TASK_MAP_COORDINATE));
 
-            modelTask = new ModelTask(title, date, priority, status, description, timeStamp);
+            modelTask = new ModelTask(title, date, priority, status, description, timeStamp, mapCoordinate);
         }
         c.close();
         return modelTask;
@@ -46,8 +47,9 @@ public class DbQueryManager {
                 int priority = cursor.getInt(cursor.getColumnIndex(DbHelper.DB_TASK_PRIORITY));
                 int status = cursor.getInt(cursor.getColumnIndex(DbHelper.DB_TASK_STATUS));
                 String description = cursor.getString(cursor.getColumnIndex(DbHelper.DB_TASK_DESCRIPTION));
+                String mapCoordinate = cursor.getColumnName(cursor.getColumnIndex(DbHelper.DB_TASK_MAP_COORDINATE));
 
-                tasks.add(new ModelTask(title, date, priority, status, description, timeStamp));
+                tasks.add(new ModelTask(title, date, priority, status, description, timeStamp, mapCoordinate));
             }while (cursor.moveToNext());
         }
         cursor.close();

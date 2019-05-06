@@ -66,6 +66,9 @@ public class AddingTaskDialogFragment extends DialogFragment {
         TextInputLayout tilTime = (TextInputLayout) containte.findViewById(R.id.tilDialogTaskTime);
         final EditText editTime = tilTime.getEditText();
 
+        TextInputLayout tilMap = (TextInputLayout) containte.findViewById(R.id.tilDialogTaskMap);
+        final EditText editMap = tilMap.getEditText();
+
         Spinner spPriority = (Spinner) containte.findViewById(R.id.spDialogTaskPriority);
 
         tilDate.setHint(getResources().getString(R.string.task_date));
@@ -93,6 +96,13 @@ public class AddingTaskDialogFragment extends DialogFragment {
         });
 
         final Calendar calendar = Calendar.getInstance();
+
+        editMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
 
         editDate.setOnClickListener(new View.OnClickListener() {
             @Override

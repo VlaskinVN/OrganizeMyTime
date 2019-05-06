@@ -32,12 +32,17 @@ public class DbUpdateManager {
         update(DbHelper.DB_TASK_DESCRIPTION, timeStamp, description);
     }
 
+    public void mapCoordinateUpdate(long timeStamp, String mapCoordinate){
+        update(DbHelper.DB_TASK_MAP_COORDINATE, timeStamp, mapCoordinate);
+    }
+
     public void taskUpdate(ModelTask task){
         titleUpdate(task.getTimeStamp(), task.getTitle());
         dateUpdate(task.getTimeStamp(), task.getDate());
         priorityUpdate(task.getTimeStamp(), task.getPriority());
         statusUpdate(task.getTimeStamp(), task.getStatus());
         descriptionUpdate(task.getTimeStamp(), task.getDescription());
+        mapCoordinateUpdate(task.getTimeStamp(), task.getMapCoordinate());
     }
 
     private void update(String column, long key, String value){

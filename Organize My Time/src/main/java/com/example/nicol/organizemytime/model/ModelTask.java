@@ -23,19 +23,21 @@ public class ModelTask implements Item {
     private int status;
     private long timeStamp;
     private int dateStatus;
+    private String mapCoordinate;
 
     public ModelTask(){
         status = -1;
         this.timeStamp = new Date().getTime();
     }
 
-    public ModelTask(String title, long date, int priority, int status, String description, long timeStamp){
+    public ModelTask(String title, long date, int priority, int status, String description, long timeStamp, String mapCoordinate){
         this.title = title;
         this.date = date;
         this.priority = priority;
         this.status = status;
         this.description = description;
         this.timeStamp = timeStamp;
+        this.mapCoordinate = mapCoordinate;
     }
 
     public int getPriorityColor(){
@@ -121,5 +123,13 @@ public class ModelTask implements Item {
 
     public void setDateStatus(int dateStatus) {
         this.dateStatus = dateStatus;
+    }
+
+    public String getMapCoordinate() {
+        return mapCoordinate;
+    }
+
+    public void setMapCoordinate(String mapCoordinate) {
+        this.mapCoordinate = mapCoordinate;
     }
 }
