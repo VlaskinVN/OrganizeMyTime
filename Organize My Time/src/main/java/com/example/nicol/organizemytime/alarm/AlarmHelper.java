@@ -52,7 +52,7 @@ public class AlarmHelper {
 
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), (int) task.getTimeStamp(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, task.getDate(), pendingIntent);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, task.getDate(), pendingIntent);
     }
 
     public void removeAlarm(long taskTimeStamp){

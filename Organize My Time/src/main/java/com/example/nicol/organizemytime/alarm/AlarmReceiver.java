@@ -1,5 +1,6 @@
 package com.example.nicol.organizemytime.alarm;
 
+import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -13,17 +14,31 @@ import android.util.Log;
 import com.example.nicol.organizemytime.MainActivity;
 import com.example.nicol.organizemytime.MyApplication;
 import com.example.nicol.organizemytime.R;
+import com.example.nicol.organizemytime.model.ModelTask;
 
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        String title = intent.getStringExtra("title");
+        /*String title = intent.getStringExtra("title");
         String description = intent.getStringExtra("description");
         long timeStamp = intent.getLongExtra("time_stamp", 0);
-        String priority = intent.getStringExtra("priority");
-        int color = intent.getIntExtra("color", 0);
+        String priority = intent.getStringExtra("priority");*/
+        //int color = intent.getIntExtra("color", 0);
 
-        Intent intentRes = new Intent(context, MainActivity.class);
+        WakeLocker.acquire(context);
+
+        Intent intentService = new Intent(context, AlarmService.class);
+
+        intentService.putExtra("title", intent.getStringExtra("title"));
+        intentService.putExtra("time_stamp", intent.getStringExtra("description"));
+        intentService.putExtra("description", intent.getLongExtra("time_stamp", 0));
+        intentService.putExtra("priority", intent.getStringExtra("priority"));
+
+        context.startService(intentService);
+
+        WakeLocker.release();
+
+        /*Intent intentRes = new Intent(context, MainActivity.class);
 
         if (MyApplication.isActivityVisible()){
             intentRes = intent;
@@ -38,7 +53,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         builder.setContentText(title);
         builder.setPriority(NotificationCompat.PRIORITY_MAX);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(description).setBigContentTitle("Подробнее о задачи : " + title).setSummaryText(priority));
-        builder.setColor(context.getResources().getColor(color));
+        //builder.setColor(context.getResources().getColor(color));
 
         builder.setSmallIcon(R.drawable.ic_add_alert);
 
@@ -49,7 +64,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify((int) timeStamp, notification);
+        notificationManager.notify((int) timeStamp, notification);*/
         Log.d("=== AR : ", "NOTIFY!!");
     }
 }

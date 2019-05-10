@@ -28,7 +28,7 @@ public class DbHelper extends SQLiteOpenHelper {
             + DB_TASK_PRIORITY + " INTEGER, "
             + DB_TASK_STATUS + " INTEGER, "
             + DB_TASK_DESCRIPTION + " TEXT, "
-            + DB_TASK_TIMESTAMP + " LONG"
+            + DB_TASK_TIMESTAMP + " LONG,"
             + DB_TASK_MAP_COORDINATE + " TEXT);";
 
     public static final String DB_SELECTION_STATUS = DbHelper.DB_TASK_STATUS + " = ?";

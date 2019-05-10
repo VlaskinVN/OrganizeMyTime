@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
 
@@ -26,21 +25,20 @@
             android:process=":remote"
             android:enabled="true">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <category android:name="com.google.android.gcm.demo.app"/>
                 <action android:name="android.intent.action.SCREEN_ON"/>
             </intent-filter>
         </receiver>
         <receiver android:name=".alarm.AlarmSetter"
-            android:process=":remote"
-            android:permission="com.google.android.c2dm.permission.SEND">
+            android:process=":remote">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <category android:name="com.google.android.gcm.demo.app"/>
             </intent-filter>
         </receiver>
         <activity android:name=".OptionActivity"></activity>
+        <service android:name=".alarm.AlarmService">
+
+        </service>
     </application>
 
 </manifest>
