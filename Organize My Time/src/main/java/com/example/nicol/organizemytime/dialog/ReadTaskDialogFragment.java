@@ -13,10 +13,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.nicol.organizemytime.R;
+import com.example.nicol.organizemytime.ReadDialogActivity;
 import com.example.nicol.organizemytime.Utils;
 import com.example.nicol.organizemytime.model.ModelTask;
 
 public class ReadTaskDialogFragment extends DialogFragment {
+
+    private ReadTaskDialogListener rtdl;
+
+    public interface ReadTaskDialogListener{
+        public void onCloseDialog();
+    }
 
     private ModelTask task;
 
@@ -30,8 +37,9 @@ public class ReadTaskDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        this.rtdl = (ReadTaskDialogListener) getActivity();
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-        dialog.setTitle(task.getTitle());
+        dialog.setTitle("Просмотр задачи : " + task.getTitle());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View container = inflater.inflate(R.layout.dialog_task_read, null);
@@ -74,6 +82,10 @@ public class ReadTaskDialogFragment extends DialogFragment {
         dialog.setNegativeButton(getResources().getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+                if (getActivity().getLocalClassName().equals(ReadDialogActivity.class.getSimpleName())){
+                    rtdl.onCloseDialog();
+                }
                 dialog.cancel();
             }
         });

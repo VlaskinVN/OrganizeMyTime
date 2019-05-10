@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
@@ -29,10 +30,13 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         Intent intentService = new Intent(context, AlarmService.class);
 
-        intentService.putExtra("title", intent.getStringExtra("title"));
+        Bundle bundle = intent.getExtras();
+        intentService.putExtras(bundle);
+
+        /*intentService.putExtra("title", intent.getStringExtra("title"));
         intentService.putExtra("time_stamp", intent.getStringExtra("description"));
         intentService.putExtra("description", intent.getLongExtra("time_stamp", 0));
-        intentService.putExtra("priority", intent.getStringExtra("priority"));
+        intentService.putExtra("priority", intent.getStringExtra("priority"));*/
 
         context.startService(intentService);
 
