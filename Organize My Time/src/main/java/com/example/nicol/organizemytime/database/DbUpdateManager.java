@@ -36,6 +36,10 @@ public class DbUpdateManager {
         update(DbHelper.DB_TASK_MAP_COORDINATE, timeStamp, mapCoordinate);
     }
 
+    public void repeatDaysUpdate(long timeStamp, String repeatDay){
+        update(DbHelper.DB_TASK_REPEAT_DAYS, timeStamp, repeatDay);
+    }
+
     public void taskUpdate(ModelTask task){
         titleUpdate(task.getTimeStamp(), task.getTitle());
         dateUpdate(task.getTimeStamp(), task.getDate());
@@ -43,6 +47,7 @@ public class DbUpdateManager {
         statusUpdate(task.getTimeStamp(), task.getStatus());
         descriptionUpdate(task.getTimeStamp(), task.getDescription());
         mapCoordinateUpdate(task.getTimeStamp(), task.getMapCoordinate());
+        repeatDaysUpdate(task.getTimeStamp(), task.getRepeatDays());
     }
 
     private void update(String column, long key, String value){

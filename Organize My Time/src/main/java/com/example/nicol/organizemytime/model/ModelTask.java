@@ -12,8 +12,17 @@ public class ModelTask implements Item, Parcelable {
     public static final int PRIORITY_NORMAL = 1;
     public static final int PRIORITY_HIGH = 2;
 
+    public static final int REPEAT_DAY_MONDAY = 0;
+    public static final int REPEAT_DAY_TUESDAY = 1;
+    public static final int REPEAT_DAY_WEDNESDAY = 2;
+    public static final int REPEAT_DAY_THURSDAY = 3;
+    public static final int REPEAT_DAY_FRIDAY = 4;
+    public static final int REPEAT_DAY_SATURDAY = 5;
+    public static final int REPEAT_DAY_SUNDAY = 6;
+
     public static final String[] PRIORITY_LEVELS = { "Низкий приоритет", "Обычный приоритет", "Высокий приоритет" };
     public static final String[] STATUS_LEVELS = { "Просроченно", "Запланированно", "Выполненно" };
+    public static final String[] REPEAT_DAYS = { "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье" };
 
     public static final int STATUS_OVERDUE = 0;
     public static final int STATUS_CURRENT = 1;
@@ -27,13 +36,14 @@ public class ModelTask implements Item, Parcelable {
     private long timeStamp;
     private int dateStatus;
     private String mapCoordinate;
+    private String repeatDays;
 
     public ModelTask(){
         status = -1;
         this.timeStamp = new Date().getTime();
     }
 
-    public ModelTask(String title, long date, int priority, int status, String description, long timeStamp, String mapCoordinate){
+    public ModelTask(String title, long date, int priority, int status, String description, long timeStamp, String mapCoordinate, String repeatDays){
         this.title = title;
         this.date = date;
         this.priority = priority;
@@ -41,6 +51,7 @@ public class ModelTask implements Item, Parcelable {
         this.description = description;
         this.timeStamp = timeStamp;
         this.mapCoordinate = mapCoordinate;
+        this.repeatDays = repeatDays;
     }
 
     public ModelTask(Parcel source) {
@@ -50,6 +61,7 @@ public class ModelTask implements Item, Parcelable {
         this.priority = source.readInt();
         this.status = source.readInt();
         this.timeStamp = source.readLong();
+        this.repeatDays = source.readString();
     }
 
     public int getPriorityColor(){
@@ -145,6 +157,14 @@ public class ModelTask implements Item, Parcelable {
         this.mapCoordinate = mapCoordinate;
     }
 
+    public String getRepeatDays() {
+        return repeatDays;
+    }
+
+    public void setRepeatDays(String repeatDays) {
+        this.repeatDays = repeatDays;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -158,6 +178,7 @@ public class ModelTask implements Item, Parcelable {
         dest.writeInt(this.priority);
         dest.writeInt(this.status);
         dest.writeLong(this.timeStamp);
+        dest.writeString(this.repeatDays);
     }
 
     public static final Parcelable.Creator<ModelTask> CREATOR = new Parcelable.Creator<ModelTask>(){

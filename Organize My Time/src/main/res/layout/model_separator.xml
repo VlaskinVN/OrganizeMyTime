@@ -6,12 +6,16 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:text="Separator"
-        android:gravity="center_horizontal"
+        android:gravity="right"
         android:textSize="16sp"
+        android:fontFamily="serif"
         android:paddingTop="10dp"
-        android:textColor="@color/colorPrimary"
-        android:id="@+id/tvSepName"/>
+        android:textColor="#616161"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:id="@+id/tvSepName"
+        android:background="#f1f1f1"/>
 
 </RelativeLayout>

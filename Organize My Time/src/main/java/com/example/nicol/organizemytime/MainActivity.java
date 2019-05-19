@@ -21,11 +21,12 @@ import com.example.nicol.organizemytime.alarm.AlarmHelper;
 import com.example.nicol.organizemytime.database.DbHelper;
 import com.example.nicol.organizemytime.dialog.AddingTaskDialogFragment;
 import com.example.nicol.organizemytime.dialog.EditTaskDialogFragment;
+import com.example.nicol.organizemytime.dialog.ReadTaskDialogFragment;
 import com.example.nicol.organizemytime.fragment.CurrentTaskFragment;
 import com.example.nicol.organizemytime.fragment.DoneTaskFragment;
 import com.example.nicol.organizemytime.model.ModelTask;
 
-public class MainActivity extends AppCompatActivity implements AddingTaskDialogFragment.AddingTaskListener, CurrentTaskFragment.OnTaskDoneListener, DoneTaskFragment.OnTaskRestoreListener, EditTaskDialogFragment.EditTaskListener {
+public class MainActivity extends AppCompatActivity implements AddingTaskDialogFragment.AddingTaskListener, CurrentTaskFragment.OnTaskDoneListener, DoneTaskFragment.OnTaskRestoreListener, EditTaskDialogFragment.EditTaskListener, ReadTaskDialogFragment.ReadTaskDialogListener {
 
     private FragmentManager fragmentMennager;
     private TabAdapter tabAdapter;
@@ -150,5 +151,10 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
     public void onTaskEdited(ModelTask updateTask) {
         currentTaskFragment.updateTask(updateTask);
         dbHelper.getUpdateManager().taskUpdate(updateTask);
+    }
+
+    @Override
+    public void onCloseDialog() {
+
     }
 }

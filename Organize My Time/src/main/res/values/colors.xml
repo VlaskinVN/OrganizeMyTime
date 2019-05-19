@@ -9,14 +9,15 @@
     <color name="colorWhite">#fff</color>
     <color name="colorGrayPager">#e6e6e6</color>
 
-    <color name="priorityHigh">#6e0002</color>
-    <color name="priorityNormal">#097000</color>
-    <color name="priorityLow">#acacac</color>
+    <color name="priorityHigh">#ffa7a9</color>
+    <color name="priorityNormal">#c2ffb1</color>
+    <color name="priorityLow">#9fa4ff</color>
 
-    <color name="priorityHighSelected">#870002</color>
-    <color name="priorityNormalSelected">#0b8600</color>
-    <color name="priorityLowSelected">#c4c4c4</color>
+    <color name="priorityHighSelected">#ffa7a9</color>
+    <color name="priorityNormalSelected">#c2ffb1</color>
+    <color name="priorityLowSelected">#9fa4ff</color>
 
     <color name="gray_50">#d6d6d6</color>
     <color name="gray_200">#cecece</color>
+    <color name="darkblue">#003366</color>
 </resources>

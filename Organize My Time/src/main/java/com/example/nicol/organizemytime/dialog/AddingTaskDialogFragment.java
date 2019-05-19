@@ -56,25 +56,26 @@ public class AddingTaskDialogFragment extends DialogFragment {
 
         final TextInputLayout tilTitle = (TextInputLayout) containte.findViewById(R.id.tilDialogTaskTitle);
         final EditText editTitle = tilTitle.getEditText();
-
         final TextInputLayout tilDecription = (TextInputLayout) containte.findViewById(R.id.tilDialogTaskDescription);
         final EditText editDescription = tilDecription.getEditText();
-
-        final TextInputLayout tilDate = (TextInputLayout) containte.findViewById(R.id.tilDialogTaskDate);
-        final EditText editDate = tilDate.getEditText();
-
-        TextInputLayout tilTime = (TextInputLayout) containte.findViewById(R.id.tilDialogTaskTime);
-        final EditText editTime = tilTime.getEditText();
-
+//        final TextInputLayout tilDate = (TextInputLayout) containte.findViewById(R.id.tilDialogTaskDate);
+//        final EditText editDate = tilDate.getEditText();
+//        TextInputLayout tilTime = (TextInputLayout) containte.findViewById(R.id.tilDialogTaskTime);
+//        final EditText editTime = tilTime.getEditText();
         TextInputLayout tilMap = (TextInputLayout) containte.findViewById(R.id.tilDialogTaskMap);
         final EditText editMap = tilMap.getEditText();
+        TextInputLayout tilRepeat = (TextInputLayout) containte.findViewById(R.id.tilDialogTaskRepeatDays);
+        final EditText editRepeat = tilRepeat.getEditText();
+
 
         Spinner spPriority = (Spinner) containte.findViewById(R.id.spDialogTaskPriority);
 
-        tilDate.setHint(getResources().getString(R.string.task_date));
-        tilTime.setHint(getResources().getString(R.string.task_time));
+//        tilDate.setHint(getResources().getString(R.string.task_date));
+//        tilTime.setHint(getResources().getString(R.string.task_time));
         tilTitle.setHint(getResources().getString(R.string.task_title));
         tilDecription.setHint(getResources().getString(R.string.task_description));
+        tilMap.setHint(getResources().getString(R.string.task_add_map_point));
+        tilRepeat.setHint(getResources().getString(R.string.task_repeat_days));
 
         builder.setView(containte);
 
@@ -104,50 +105,50 @@ public class AddingTaskDialogFragment extends DialogFragment {
             }
         });
 
-        editDate.setOnClickListener(new View.OnClickListener() {
+        String days = "";
+
+        editRepeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (editDate.length() == 0){
-                    editDate.setText(" ");
-                }
-
-                DialogFragment datePickerFragment = DatePickerFragment.newInstance(getActivity(), R.id.tvTaskDate, calendar);
-                ((DatePickerFragment) datePickerFragment).setDateDialogFragmentListener(new DateDialogFragmentListener() {
+                DialogFragment df = RepeatDialogFragment.newInstance();
+                ((RepeatDialogFragment) df).setRepeadListeners(new RepeatDialogListener() {
                     @Override
-                    public void dateDialogFragmentDateSet(int year, int monthOfYear, int dayOfMonth) {
-                        calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, monthOfYear);
-                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                    public void repeatOptionUserListener(String day, int hour, int minute) {
+                        editRepeat.setText(day);
+                        task.setRepeatDays(day);
 
-                        editDate.setText(Utils.getDate(calendar.getTimeInMillis()));
-
-                        //Log.d("=== ATDF ", "Year : " + year + " month : " + monthOfYear + " day : " + dayOfMonth);
-                    }
-                });
-
-                datePickerFragment.show(getFragmentManager(), "DatePickerFragment");
-            }
-        });
-
-        editTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (editTime.length() == 0){
-                    editTime.setText(" ");
-                }
-                DialogFragment timePickerFragment = TimePickerFragment.newInstance(getActivity(), R.id.tvTaskDate, calendar);
-                ((TimePickerFragment) timePickerFragment).setTimeDialogFragmentListener(new TimeDialogFragmentListener() {
-                    @Override
-                    public void timeDialogFragmentDateSet(int hourOfDay, int minute) {
-                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        calendar.set(Calendar.HOUR_OF_DAY, hour);
                         calendar.set(Calendar.MINUTE, minute);
                         calendar.set(Calendar.SECOND, 0);
+                        task.setDate(calendar.getTimeInMillis());
+                    }
 
-                        editTime.setText(Utils.getTime(calendar.getTimeInMillis()));
+                    @Override
+                    public void repeatOneDayListener(Calendar c) {
+                        editRepeat.setText(c.getTime().toString());
+                        calendar.set(Calendar.YEAR, c.get(Calendar.YEAR));
+                        calendar.set(Calendar.MONTH, c.get(Calendar.MONTH));
+                        calendar.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH));
+                        calendar.set(Calendar.HOUR_OF_DAY, c.get(Calendar.HOUR_OF_DAY));
+                        calendar.set(Calendar.MINUTE, c.get(Calendar.MINUTE));
+                        calendar.set(Calendar.SECOND, 0);
+
+                        task.setDate(calendar.getTimeInMillis());
+
+                        task.setRepeatDays("");
+                    }
+
+                    @Override
+                    public void repeatEverydayListener(boolean every, int hour, int minute) {
+                        editRepeat.setText("Ежедневно");
+                        task.setRepeatDays("everyday");
+                        calendar.set(Calendar.HOUR_OF_DAY, hour);
+                        calendar.set(Calendar.MINUTE, minute);
+                        task.setDate(calendar.getTimeInMillis());
                     }
                 });
 
-                timePickerFragment.show(getFragmentManager(), "TimePickerFragment");
+                df.show(getFragmentManager(), "RepeatDialogFragment");
             }
         });
 
@@ -157,17 +158,33 @@ public class AddingTaskDialogFragment extends DialogFragment {
                 task.setTitle(editTitle.getText().toString());
                 task.setDescription(editDescription.getText().toString());
                 task.setStatus(ModelTask.STATUS_CURRENT);
-                if (editDate.length() != 0 || editTime.length() != 0){
-                    task.setDate(calendar.getTimeInMillis());
+//                if (task.getDate() != 0){
                     AlarmHelper alarmHelper = AlarmHelper.getInstance();
-                    alarmHelper.setAlarm(task);
-                } else {
-                    calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) + 1);
-                    calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
-                    calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
-                    calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH));
-                    task.setDate(calendar.getTimeInMillis());
-                }
+                    if (task.getRepeatDays().length() > 0){
+                        if (task.getRepeatDays().equals("everyday")){
+                            Log.d("=== ATDF ", "alarmHelper.setAlarmEveryday(task);");
+                            alarmHelper.setAlarmEveryday(task);
+                        }else{
+                            Log.d("=== ATDF ", "alarmHelper.setAlarmOptionUser(task);");
+                            alarmHelper.setAlarmOptionUser(task);
+                        }
+                    }else{
+                        task.setDate(calendar.getTimeInMillis());
+                        Log.d("=== ATDF ", "alarmHelper.setAlarm(task);");
+                        alarmHelper.setAlarm(task);
+                    }
+//
+//                } else {
+//                    calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) + 1);
+//                    calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
+//                    calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
+//                    calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH));
+//                    task.setDate(calendar.getTimeInMillis());
+//
+//                    AlarmHelper alarmHelper = AlarmHelper.getInstance();
+//                    alarmHelper.setAlarm(task);
+//                }
+
                 addingTaskListener.onTaskAdded(task);
                 dialog.dismiss();
             }
@@ -191,28 +208,30 @@ public class AddingTaskDialogFragment extends DialogFragment {
                     tilTitle.setError(getResources().getString(R.string.dialog_error_empty_title));
                 }
 
-                editDate.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (calendar.get(Calendar.DAY_OF_YEAR) < Calendar.getInstance().get(Calendar.DAY_OF_YEAR)){
-                            positiveButton.setEnabled(false);
-                            tilDate.setError("Выбранна некоректная дата!");
-                        }else{
-                            positiveButton.setEnabled(true);
-                            tilDate.setErrorEnabled(false);
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                });
+//                editDate.addTextChangedListener(new TextWatcher() {
+//                    @Override
+//                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                        if (calendar.get(Calendar.DAY_OF_YEAR) < Calendar.getInstance().get(Calendar.DAY_OF_YEAR) ||
+//                                calendar.get(Calendar.MONTH) < Calendar.getInstance().get(Calendar.MONTH) ||
+//                                calendar.get(Calendar.YEAR) < Calendar.getInstance().get(Calendar.YEAR)){
+//                            positiveButton.setEnabled(false);
+//                            tilDate.setError("Выбранна некоректная дата!");
+//                        }else{
+//                            positiveButton.setEnabled(true);
+//                            tilDate.setErrorEnabled(false);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void afterTextChanged(Editable s) {
+//
+//                    }
+//                });
 
                 editTitle.addTextChangedListener(new TextWatcher() {
                     @Override

@@ -11,6 +11,7 @@
         android:id="@+id/rvCurrentTasks"
         android:scrollbars="vertical"
         android:clipToPadding="false"
-        android:paddingBottom="88dp"/>
+        android:paddingBottom="88dp"
+        android:background="#f4f4f4"/>
 
 </FrameLayout>

@@ -88,15 +88,15 @@ public class CurrentTasksAdapter extends TaskAdapter {
             itemView.setVisibility(View.VISIBLE);
             taskViewHolder.priority.setEnabled(true);
 
-            if (task.getDate() != 0 && task.getDate() < Calendar.getInstance().getTimeInMillis()){
+            /*if (task.getDate() != 0 && task.getDate() < Calendar.getInstance().getTimeInMillis()){
                 itemView.setBackgroundColor(resources.getColor(R.color.gray_200));
             }else{
                 itemView.setBackgroundColor(resources.getColor(R.color.gray_50));
-            }
+            }*/
 
             itemView.setBackground(resources.getDrawable(R.drawable.status_rect));
-            taskViewHolder.title.setTextColor(resources.getColor(R.color.colorPrimaryDark));
-            taskViewHolder.date.setTextColor(resources.getColor(R.color.colorPrimaryDark));
+            taskViewHolder.title.setTextColor(resources.getColor(R.color.darkblue));
+            taskViewHolder.date.setTextColor(resources.getColor(R.color.priorityLowSelected));
             taskViewHolder.priority.setBackground(resources.getDrawable(task.getPriorityColor()));
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -115,9 +115,9 @@ public class CurrentTasksAdapter extends TaskAdapter {
 
                     getTaskFragment().activity.dbHelper.getUpdateManager().statusUpdate(task.getTimeStamp(), ModelTask.STATUS_DONE);
 
-                    itemView.setBackground(resources.getDrawable(R.drawable.status_rect_selected));
-                    taskViewHolder.title.setTextColor(resources.getColor(R.color.colorPrimaryDark));
-                    taskViewHolder.date.setTextColor(resources.getColor(R.color.colorPrimaryDark));
+                    itemView.setBackground(resources.getDrawable(R.drawable.status_rect));
+                    taskViewHolder.title.setTextColor(resources.getColor(R.color.darkblue));
+                    taskViewHolder.date.setTextColor(resources.getColor(R.color.priorityLowSelected));
                     taskViewHolder.priority.setBackground(resources.getDrawable(task.getPriorityColor()));
 
 

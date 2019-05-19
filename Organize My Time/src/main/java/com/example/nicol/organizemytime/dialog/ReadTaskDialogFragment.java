@@ -54,12 +54,15 @@ public class ReadTaskDialogFragment extends DialogFragment {
         final EditText tvPriority = tilPriority.getEditText();
         final TextInputLayout tilStatus = container.findViewById(R.id.tilDialogTaskReadStatus);
         final EditText tvStatus = tilStatus.getEditText();
+        final TextInputLayout tilRepDay = container.findViewById(R.id.tilDialogTaskRepeatDays);
+        final EditText tvRepDay = tilRepDay.getEditText();
 
         tilTitle.setHint(getResources().getString(R.string.task_title));
         tilDate.setHint(getResources().getString(R.string.task_date));
         tilDesc.setHint(getResources().getString(R.string.task_description));
         tilPriority.setHint(getResources().getString(R.string.task_priority));
         tilStatus.setHint(getResources().getString(R.string.task_status));
+        tilRepDay.setHint(getResources().getString(R.string.task_repeat_days));
         //Log.d("=== RTDF ", "task.getPriority() : " + task.getPriority());
 
         tvTitle.setText(task.getTitle());
@@ -75,6 +78,8 @@ public class ReadTaskDialogFragment extends DialogFragment {
         }else{
             tvStatus.setText(Utils.getStatusType(task.getStatus()));
         }
+
+        tvRepDay.setText(task.getRepeatDays());
 
 
         dialog.setView(container);

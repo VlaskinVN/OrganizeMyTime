@@ -3,11 +3,14 @@ package com.example.nicol.organizemytime.alarm;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
+import com.example.nicol.organizemytime.Utils;
 import com.example.nicol.organizemytime.database.DbHelper;
 import com.example.nicol.organizemytime.model.ModelTask;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AlarmSetter extends BroadcastReceiver {
@@ -26,8 +29,9 @@ public class AlarmSetter extends BroadcastReceiver {
                 DbHelper.DB_TASK_DATE
         ));
 
-        for (ModelTask task :tasks) {
+        for (ModelTask task : tasks) {
             if (task.getDate() != 0){
+                Log.d("=== AS ", "----------------");
                 alarmHelper.setAlarm(task);
             }
         }

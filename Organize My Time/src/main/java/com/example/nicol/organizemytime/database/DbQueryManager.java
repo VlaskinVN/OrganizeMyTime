@@ -27,8 +27,9 @@ public class DbQueryManager {
             int status = c.getInt(c.getColumnIndex(DbHelper.DB_TASK_STATUS));
             String description = c.getString(c.getColumnIndex(DbHelper.DB_TASK_DESCRIPTION));
             String mapCoordinate = c.getColumnName(c.getColumnIndex(DbHelper.DB_TASK_MAP_COORDINATE));
+            String repeatDays = c.getColumnName(c.getColumnIndex(DbHelper.DB_TASK_REPEAT_DAYS));
 
-            modelTask = new ModelTask(title, date, priority, status, description, timeStamp, mapCoordinate);
+            modelTask = new ModelTask(title, date, priority, status, description, timeStamp, mapCoordinate, repeatDays);
         }
         c.close();
         return modelTask;
@@ -48,8 +49,9 @@ public class DbQueryManager {
                 int status = cursor.getInt(cursor.getColumnIndex(DbHelper.DB_TASK_STATUS));
                 String description = cursor.getString(cursor.getColumnIndex(DbHelper.DB_TASK_DESCRIPTION));
                 String mapCoordinate = cursor.getColumnName(cursor.getColumnIndex(DbHelper.DB_TASK_MAP_COORDINATE));
+                String repeatDays = cursor.getColumnName(cursor.getColumnIndex(DbHelper.DB_TASK_REPEAT_DAYS));
 
-                tasks.add(new ModelTask(title, date, priority, status, description, timeStamp, mapCoordinate));
+                tasks.add(new ModelTask(title, date, priority, status, description, timeStamp, mapCoordinate, repeatDays));
             }while (cursor.moveToNext());
         }
         cursor.close();

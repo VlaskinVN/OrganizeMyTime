@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:text="Однократно"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary"
+        android:textSize="17sp"
+        android:id="@+id/btnOneDay"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:text="Ежедневно"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary"
+        android:textSize="17sp"
+        android:id="@+id/btnEveryday"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:text="Настройка пользователя"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary"
+        android:textSize="17sp"
+        android:id="@+id/btnOptionUser"/>
+
+</LinearLayout>

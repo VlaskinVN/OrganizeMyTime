@@ -10,6 +10,7 @@
 
     <string name="dialog_title_edit">Редактирование задачи</string>
     <string name="dialog_title">Добавление новой задачи</string>
+    <string name="dialog_title_repeat_days">Выбор даты повторения задачи</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Отмена</string>
     <string name="dialog_error_empty_title">Введите название задачи</string>
@@ -32,6 +33,8 @@
     <string name="task_description">Заметки</string>
     <string name="task_status">Статус</string>
     <string name="task_priority">Приоритет</string>
+    <string name="task_add_map_point">Добавить метку на карте</string>
+    <string name="task_repeat_days">Дни повтора</string>
 
     <string name="notify_read">Посмотреть</string>
 

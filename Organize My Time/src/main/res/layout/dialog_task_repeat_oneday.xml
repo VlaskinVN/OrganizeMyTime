@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:id="@+id/spacer"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tilDialogTaskDate"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_below="@id/spacer">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:inputType="none"
+            android:focusableInTouchMode="false"
+            android:cursorVisible="false"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tilDialogTaskTime"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_alignRight="@+id/spacer"
+
+        android:layout_below="@id/spacer">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:focusableInTouchMode="false"
+            android:inputType="none"
+            android:cursorVisible="false"/>
+    </android.support.design.widget.TextInputLayout>
+
+</RelativeLayout>

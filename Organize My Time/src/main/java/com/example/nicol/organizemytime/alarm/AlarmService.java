@@ -58,7 +58,17 @@ public class AlarmService extends IntentService {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setContentTitle("Напоминание : " + title);
         builder.setContentText(title);
-        builder.setPriority(NotificationCompat.PRIORITY_MAX);
+        switch (task.getPriority()){
+            case ModelTask.PRIORITY_LOW:
+                builder.setPriority(NotificationCompat.PRIORITY_LOW);
+                break;
+            case ModelTask.PRIORITY_NORMAL:
+                builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                break;
+            case ModelTask.PRIORITY_HIGH:
+                builder.setPriority(NotificationCompat.PRIORITY_MAX);
+                break;
+        }
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(description).setBigContentTitle("Подробнее о задачи : " + title).setSummaryText(priority));
         builder.addAction(R.drawable.ic_add, "Просмотреть", readPIntent);
         //builder.setColor(this.getResources().getColor(color));

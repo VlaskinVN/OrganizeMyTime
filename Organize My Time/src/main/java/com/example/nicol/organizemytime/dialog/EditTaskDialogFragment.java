@@ -36,6 +36,7 @@ public class EditTaskDialogFragment extends DialogFragment {
         args.putString("description", task.getDescription());
         args.putLong("time_stamp", task.getTimeStamp());
         args.putString("mapCoordinate", task.getMapCoordinate());
+        args.putString("repeatDays", task.getRepeatDays());
 
         etdf.setArguments(args);
 
@@ -66,10 +67,10 @@ public class EditTaskDialogFragment extends DialogFragment {
         int priority = args.getInt("priority", 0);
         String description = args.getString("description");
         long timeStamp = args.getLong("time_stamp", 0);
-
         String mapCoordinate = args.getString("mapCoordinate");
+        String repeatDays = args.getString("repeat");
         
-        final ModelTask task = new ModelTask(title, date, priority, 0, description, timeStamp, mapCoordinate);
+        final ModelTask task = new ModelTask(title, date, priority, 0, description, timeStamp, mapCoordinate, repeatDays);
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle(R.string.dialog_title_edit);
