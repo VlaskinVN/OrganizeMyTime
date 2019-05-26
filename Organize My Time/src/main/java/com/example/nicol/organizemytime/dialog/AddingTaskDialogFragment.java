@@ -1,12 +1,22 @@
 package com.example.nicol.organizemytime.dialog;
 
+import android.Manifest;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,11 +32,15 @@ import android.widget.Spinner;
 import com.example.nicol.organizemytime.R;
 import com.example.nicol.organizemytime.Utils;
 import com.example.nicol.organizemytime.alarm.AlarmHelper;
+import com.example.nicol.organizemytime.location.LocationHelper;
 import com.example.nicol.organizemytime.model.ModelTask;
 
 import java.util.Calendar;
 
 public class AddingTaskDialogFragment extends DialogFragment {
+
+    LocationManager locationManager;
+    LocationListener listener;
 
     public interface AddingTaskListener {
         void onTaskAdded(ModelTask newTask);
@@ -101,7 +115,32 @@ public class AddingTaskDialogFragment extends DialogFragment {
         editMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+
+                listener = new LocationListener()  {
+                    @Override
+                    public void onLocationChanged(Location location) {
+                        editMap.setText(location.getLatitude() + "    ---     " + location.getLongitude());
+                    }
+
+                    @Override
+                    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                    }
+
+                    @Override
+                    public void onProviderEnabled(String provider) {
+
+                    }
+
+                    @Override
+                    public void onProviderDisabled(String provider) {
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(intent);
+                    }
+                };
+
+                configureButton();
             }
         });
 
@@ -162,16 +201,90 @@ public class AddingTaskDialogFragment extends DialogFragment {
                     AlarmHelper alarmHelper = AlarmHelper.getInstance();
                     if (task.getRepeatDays().length() > 0){
                         if (task.getRepeatDays().equals("everyday")){
-                            Log.d("=== ATDF ", "alarmHelper.setAlarmEveryday(task);");
+                            //Log.d("=== ATDF ", "alarmHelper.setAlarmEveryday(task);");
+
                             alarmHelper.setAlarmEveryday(task);
+                            addingTaskListener.onTaskAdded(task);
                         }else{
-                            Log.d("=== ATDF ", "alarmHelper.setAlarmOptionUser(task);");
-                            alarmHelper.setAlarmOptionUser(task);
+                            //Log.d("=== ATDF ", "alarmHelper.setAlarmOptionUser(task);");
+
+                            String repeatDay = task.getRepeatDays();
+                            String[] arrday = repeatDay.split(",");
+                            repeatDay.trim();
+
+                            String[] days = {"", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"};
+
+                            for (int i = 0; i < arrday.length - 1; i++){
+                                Log.d("=== AH ", arrday[i].trim());
+                                String str = arrday[i].trim();
+                                for (int j = 0; j < days.length; j++){
+                                    if (str.equals(days[j])){
+                                        Log.d("=== AHj ", days[j]);
+                                        final Calendar calendars = Calendar.getInstance();
+
+                                        switch (j){
+                                            case 1:
+                                                calendars.set(Calendar.DAY_OF_WEEK, 1);
+                                                task.setDate(calendars.getTimeInMillis());
+                                                addingTaskListener.onTaskAdded(task);alarmHelper.setAlarm(task);
+                                                Log.d("=== AH1 ", days[j] + " --- " + calendars.get(Calendar.DATE) + " " + calendars.get(Calendar.MONTH));
+//                                                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, task.getDate(), AlarmManager.INTERVAL_DAY, pendingIntent);
+                                                break;
+                                            case 2:
+                                                calendars.set(Calendar.DAY_OF_WEEK, 2);
+                                                task.setDate(calendars.getTimeInMillis());
+                                                addingTaskListener.onTaskAdded(task);alarmHelper.setAlarm(task);
+                                                Log.d("=== AH2 ", days[j] + " --- " + calendars.get(Calendar.DATE) + " " + calendars.get(Calendar.MONTH));
+//                                                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, task.getDate(), AlarmManager.INTERVAL_DAY, pendingIntent);
+                                                break;
+                                            case 3:
+                                                calendars.set(Calendar.DAY_OF_WEEK, 3);
+                                                task.setDate(calendars.getTimeInMillis());
+                                                addingTaskListener.onTaskAdded(task);alarmHelper.setAlarm(task);
+                                                Log.d("=== AH3 ", days[j] + " --- " + calendars.get(Calendar.DATE) + " " + calendars.get(Calendar.MONTH));
+//                                                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, task.getDate(), AlarmManager.INTERVAL_DAY, pendingIntent);
+                                                break;
+                                            case 4:
+                                                calendars.set(Calendar.DAY_OF_WEEK, 4);
+                                                task.setDate(calendars.getTimeInMillis());
+                                                addingTaskListener.onTaskAdded(task);alarmHelper.setAlarm(task);
+                                                Log.d("=== AH4 ", days[j] + " --- " + calendars.get(Calendar.DATE) + " " + calendars.get(Calendar.MONTH));
+//                                                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, task.getDate(), AlarmManager.INTERVAL_DAY, pendingIntent);
+                                                break;
+                                            case 5:
+                                                calendars.set(Calendar.DAY_OF_WEEK, 5);
+                                                task.setDate(calendars.getTimeInMillis());
+                                                addingTaskListener.onTaskAdded(task);alarmHelper.setAlarm(task);
+                                                Log.d("=== AH5 ", days[j] + " --- " + calendars.get(Calendar.DATE) + " " + calendars.get(Calendar.MONTH));
+//                                                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, task.getDate(), AlarmManager.INTERVAL_DAY, pendingIntent);
+                                                break;
+                                            case 6:
+                                                calendars.set(Calendar.DAY_OF_WEEK, 6);
+                                                task.setDate(calendars.getTimeInMillis());
+                                                addingTaskListener.onTaskAdded(task);alarmHelper.setAlarm(task);
+                                                Log.d("=== AH6 ", days[j] + " --- " + calendars.get(Calendar.DATE) + " " + calendars.get(Calendar.MONTH));
+//                                                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, task.getDate(), AlarmManager.INTERVAL_DAY, pendingIntent);
+                                                break;
+                                            case 7:
+                                                calendars.set(Calendar.DAY_OF_WEEK, 7);
+                                                task.setDate(calendars.getTimeInMillis());
+                                                addingTaskListener.onTaskAdded(task);alarmHelper.setAlarm(task);
+                                                Log.d("=== AH7 ", days[j] + " --- " + calendars.get(Calendar.DATE) + " " + calendars.get(Calendar.MONTH));
+//                                                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, task.getDate(), AlarmManager.INTERVAL_DAY, pendingIntent);
+                                                break;
+                                        }
+                                    }
+
+                                }
+                            }
+
+                            //alarmHelper.setAlarmOptionUser(task);
                         }
                     }else{
                         task.setDate(calendar.getTimeInMillis());
-                        Log.d("=== ATDF ", "alarmHelper.setAlarm(task);");
+                        //Log.d("=== ATDF ", "alarmHelper.setAlarm(task);");
                         alarmHelper.setAlarm(task);
+                        addingTaskListener.onTaskAdded(task);
                     }
 //
 //                } else {
@@ -185,7 +298,7 @@ public class AddingTaskDialogFragment extends DialogFragment {
 //                    alarmHelper.setAlarm(task);
 //                }
 
-                addingTaskListener.onTaskAdded(task);
+                //addingTaskListener.onTaskAdded(task);
                 dialog.dismiss();
             }
         });
@@ -259,5 +372,18 @@ public class AddingTaskDialogFragment extends DialogFragment {
         });
 
         return alertDialog;
+    }
+
+    private void configureButton() {
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                return;
+            }
+            return;
+        }
+        locationManager.requestLocationUpdates("gps", 5000, 0, listener);
     }
 }
